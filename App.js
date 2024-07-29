@@ -6,6 +6,7 @@ import SignScreen from './Screens/SignPage';
 import SignInPage from './Screens/SignInPage';
 import SignUpPage from './Screens/SignUpPage';
 import HomePage from './Screens/HomePage';
+import Analyses from './Screens/Analyses';
 
 
 
@@ -19,7 +20,7 @@ const App = () => {
         <Stack.Screen name="Sign In" component={SignInPage} />
         <Stack.Screen name="Sign Up" component={SignUpPage} />
         <Stack.Screen name="HomePage" component={HomePage} />
-
+        <Stack.Screen name="Analyses" component={Analyses} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -14,7 +14,6 @@ import {
   Platform
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { MaterialIcons } from '@expo/vector-icons';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import { SelectList } from 'react-native-dropdown-select-list';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -121,14 +120,7 @@ const HomePage = ({ navigation }) => {
         >
           <Text style={styles.currentBalanceText}>Current Balance</Text>
           <Text style={styles.balanceAmountText}>{currentBalanceCalculate()} ₺</Text>
-          <View style={styles.navigationContainer}>
-            <TouchableOpacity style={styles.navigationButton}>
-              <MaterialIcons name="navigate-before" size={50} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <MaterialIcons name="navigate-next" size={50} color="white" />
-            </TouchableOpacity>
-          </View>
+          
         </LinearGradient>
 
         <SegmentedControlTab
@@ -235,11 +227,26 @@ const HomePage = ({ navigation }) => {
             </>
           )}
 
+        </ScrollView>
+        <View style={{alignItems:'center'}}>
+          <TouchableOpacity 
+            style={styles.analysisButton} 
+            onPress={() => navigation.navigate('Analyses', {
+              gelir: incomeRecords.reduce((total, record) => total + parseFloat(record.amount || 0), 0),
+              gider: expenseRecords.reduce((total, record) => total + parseFloat(record.amount || 0), 0),
+              expenseRecords: expenseRecords, // Eklenen satır
+            })}
+          >
+            <Text style={styles.analysisButtonText}>Analyses</Text>
+          </TouchableOpacity>
+
+        </View>
+
+        <View style={{alignItems:'center'}}>
           <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
             <Text style={styles.saveButtonText}>Save</Text>
           </TouchableOpacity>
-        </ScrollView>
-
+        </View>
         {/* Modal for adding new category */}
         <Modal
           visible={showModal}
@@ -290,11 +297,6 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     marginBottom: 20,
-  },
-  navigationContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 20,
   },
   segmentedControl: {
     marginVertical: 10,
@@ -348,12 +350,25 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   saveButton: {
+    width:'90%',
     backgroundColor: '#28a745',
     padding: 15,
-    marginVertical: 20,
+    marginBottom:50,
+    borderRadius: 5,
+  },
+  analysisButton: {
+    width:'90%',
+    backgroundColor: '#28a745',
+    padding: 15,
+    marginBottom:5,
     borderRadius: 5,
   },
   saveButtonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  analysisButtonText: {
     color: 'white',
     textAlign: 'center',
     fontSize: 16,
